@@ -1,9 +1,3 @@
-# Sydney Coronavirus Analysis
-# Written by Laurence Park <lapark@westernsydney.edu.au>
-# 11th of May 2021
-# Description:
-# Analysis of simulated coronavirus data for the Sydney population
-# when intervention was not provided.
 library("ggplot2")
 # load data
 d <- read.csv("data/epiSEIHCRD_combAge.csv")
@@ -17,8 +11,13 @@ cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442",
 palette(cbbPalette)
 dDate <- subset(d, subset = ((t >= "2020-06-01") & (t <= "2020-12-31")))
 g <- ggplot(data = dDate) +
-geom_line(mapping = aes(x = t, y = H), color = "red") +
+geom_line(mapping = aes(x = t, y = H, color = "Hospitalised")) +
+geom_line(mapping = aes(x = t, y = C, color = "Critical")) +
+geom_line(mapping = aes(x = t, y = D, color = "Dead")) +
+scale_y_sqrt() +
 scale_x_date(date_breaks = "1 month", date_minor_breaks = "1 week",
 date_labels = "%B") +
-labs(title = "Hospital beds required (Sydney 2020)", x = "Date", y = "Beds")
+labs(title = "Hospital beds required (Sydney 2020)", x = "Date", y = "Count",
+color = "State")
 print(g)
+
